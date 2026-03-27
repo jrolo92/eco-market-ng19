@@ -25,6 +25,8 @@ import { DialogModule } from 'primeng/dialog';
 import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
 import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 
+import { provideAnimations } from "@angular/platform-browser/animations";
+
 const firebaseConfig = {
   apiKey: "AIzaSyB0k9TWy6k15sZV7O18M4nWnEepAe6x6RA",
   authDomain: "eco-market-ang.firebaseapp.com",
@@ -52,7 +54,7 @@ const firebaseConfig = {
     provideClientHydration(withEventReplay()),
     providePrimeNG({ 
         theme: {
-            preset: Aura, // Esto aplica el diseño automáticamente
+            preset: Aura, 
             options: {
               darkModeSelector: 'none'
             }

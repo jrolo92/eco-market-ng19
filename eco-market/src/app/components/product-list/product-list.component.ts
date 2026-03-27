@@ -60,5 +60,6 @@ export class ProductListComponent {
   verDetalle(producto: any) {
     this.productoSeleccionado = producto;
     this.detalleDialog = true;
+    console.log('Abriendo:', this.productoSeleccionado.name);
   }
 }

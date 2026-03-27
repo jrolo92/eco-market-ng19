@@ -1,67 +1,68 @@
-<div class="contenedor-principal">
-    <h2 #miTitulo class="titulo">{{ titulo }}</h2>
-    <div class="seccion-busqueda">
-        <!-- <label for="busqueda">Busca tus productos...</label>
-            <input type="text" name="busqueda"> -->
-        <p-iconField iconPosition="left">
-            <p-inputIcon styleClass="pi pi-search"></p-inputIcon>
-            <input 
-                type="text" 
-                pInputText 
-                placeholder="Buscar productos eco..." 
-                [(ngModel)]="textoBusqueda" 
-                class="w-full buscador-input" />
-        </p-iconField>
-        <div *ngIf="productosFiltrados.length === 0" class="mensaje-vacio">
-            <i class="pi pi-search-plus"></i>
-            <p>No hemos encontrado ningún producto que coincida con "{{ textoBusqueda }}"</p>
+    <div class="contenedor-principal">
+        <h2 #miTitulo class="titulo">{{ titulo }}</h2>
+        <div class="seccion-busqueda">
+            <!-- <label for="busqueda">Busca tus productos...</label>
+                <input type="text" name="busqueda"> -->
+            <p-iconField iconPosition="left">
+                <p-inputIcon styleClass="pi pi-search"></p-inputIcon>
+                <input 
+                    type="text" 
+                    pInputText 
+                    placeholder="Buscar productos eco..." 
+                    [(ngModel)]="textoBusqueda" 
+                    class="w-full buscador-input" />
+            </p-iconField>
+            <div *ngIf="productosFiltrados.length === 0" class="mensaje-vacio">
+                <i class="pi pi-search-plus"></i>
+                <p>No hemos encontrado ningún producto que coincida con "{{ textoBusqueda }}"</p>
+            </div>
+        </div>
+
+        <div class="rejilla">
+            <p-card 
+                *ngFor="let producto of productosFiltrados" 
+                [header]="producto.name" 
+                [subheader]="producto.category"
+                class="animacion-hover"
+                (click)="verDetalle(producto)">
+                
+                <ng-template pTemplate="header">
+                    <img [src]="producto.url" [alt]="producto.name" class="imagen-card" />
+                </ng-template>
+
+                <p class="precio-eco">{{ producto.price | euroCurrency }}</p>
+
+                <ng-template pTemplate="footer">
+                    <p-button 
+                        label="Añadir al carrito" 
+                        icon="pi pi-shopping-cart" 
+                        (onClick)="cambiarColor()"
+                        styleClass="boton-ancho">
+                    </p-button>
+                </ng-template>
+            </p-card>
         </div>
     </div>
+    <p-dialog 
+        header="Detalles del Producto" 
+        [(visible)]="detalleDialog"
+        appendTo="body"
+        [modal]="true" 
+        [style]="{ width: '50vw', 'min-width': '300px' }" 
+        [draggable]="false" 
+        [resizable]="false"
+        styleClass="dialogo-eco">
+        
+        <div *ngIf="productoSeleccionado" class="detalle-container">
+            <img [src]="productoSeleccionado.url" class="img-detalle">
+            <h3>{{ productoSeleccionado.name }}</h3>
+            <p class="categoria-tag">{{ productoSeleccionado.category }}</p>
+            <p class="descripcion">Este es un producto 100% ecológico, libre de plásticos y respetuoso con el medio ambiente.</p>
+            <span class="precio-grande">{{ productoSeleccionado.price | euroCurrency }}</span>
+        </div>
 
-    <div class="rejilla">
-        <p-card 
-            *ngFor="let producto of productosFiltrados" 
-            [header]="producto.name" 
-            [subheader]="producto.category"
-            class="animacion-hover"
-            (click)="verDetalle(producto)">
-            
-            <ng-template pTemplate="header">
-                <img [src]="producto.url" [alt]="producto.name" class="imagen-card" />
-            </ng-template>
-
-            <p class="precio-eco">{{ producto.price | euroCurrency }}</p>
-
-            <ng-template pTemplate="footer">
-                <p-button 
-                    label="Añadir al carrito" 
-                    icon="pi pi-shopping-cart" 
-                    (onClick)="cambiarColor()"
-                    styleClass="boton-ancho">
-                </p-button>
-            </ng-template>
-        </p-card>
-    </div>
-</div>
-<p-dialog 
-    header="Detalles del Producto" 
-    [(visible)]="detalleDialog" 
-    [modal]="true" 
-    [style]="{ width: '25vw' }" 
-    [draggable]="false" 
-    [resizable]="false"
-    styleClass="dialogo-eco">
-    
-    <div *ngIf="productoSeleccionado" class="detalle-container">
-        <img [src]="productoSeleccionado.url" class="img-detalle">
-        <h3>{{ productoSeleccionado.name }}</h3>
-        <p class="categoria-tag">{{ productoSeleccionado.category }}</p>
-        <p class="descripcion">Este es un producto 100% ecológico, libre de plásticos y respetuoso con el medio ambiente.</p>
-        <span class="precio-grande">{{ productoSeleccionado.price | euroCurrency }}</span>
-    </div>
-
-    <ng-template pTemplate="footer">
-        <p-button label="Cerrar" icon="pi pi-times" (onClick)="detalleDialog=false" styleClass="p-button-text"></p-button>
-        <p-button label="Añadir al carrito" icon="pi pi-shopping-cart"></p-button>
-    </ng-template>
-</p-dialog>
+        <ng-template pTemplate="footer">
+            <p-button label="Cerrar" icon="pi pi-times" (onClick)="detalleDialog=false" styleClass="p-button-text"></p-button>
+            <p-button label="Añadir al carrito" icon="pi pi-shopping-cart"></p-button>
+        </ng-template>
+    </p-dialog>
